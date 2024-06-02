@@ -18,15 +18,46 @@
     const urlParams = new URLSearchParams(window.location.search);
     const lat = urlParams.get('lat');
     const lng = urlParams.get('lng');
-    const map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/jhgann/clwxfa0fj00u201po5zum4jrb',
-      center: [lng, lat],
-      zoom: 19,  // Close-up zoom level
-      pitch: 60,  // Tilt the camera for 3D effect
-      bearing: -30  // Rotate the camera for a 3/4 view
-    });
-    new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
+    if (!isNaN(lat) && !isNaN(lng)) {
+      const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/jhgann/clwxfa0fj00u201po5zum4jrb',
+        center: [lng, lat],
+        zoom: 19,  // Close-up zoom level
+        pitch: 60,  // Tilt the camera for 3D effect
+        bearing: -30  // Rotate the camera for a 3/4 view
+      });
+      
+      map.on('load', () => {
+        console.log('Map loaded successfully.');
+
+        // Find and highlight the building at the specified coordinates
+        const features = map.queryRenderedFeatures(
+          map.project([lng, lat]),
+          { layers: ['building'] }  // Specify the building layer from your style
+        );
+
+        if (features.length > 0) {
+          const building = features[0];
+          map.setPaintProperty('building', 'fill-extrusion-color', [
+            'case',
+            ['==', ['get', 'id'], building.properties.id],
+            '#ff0000',  // Highlight color
+            '#5b6262'  // Default color
+          ]);
+        } else {
+          console.log('No building found at the specified coordinates.');
+        }
+      });
+
+      map.on('error', (e) => {
+        console.error('Mapbox error:', e);
+      });
+
+      // new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);  // Remove this line to avoid adding a pin marker
+    } else {
+      alert('Invalid or missing coordinates!');
+    }
   </script>
 </body>
 </html>
