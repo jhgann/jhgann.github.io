@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #ECF4F4;
+            background-color: #FFFFFF; /* Set body background to white */
             color: #2D3535;
             font-size: 16px; /* Increased font size */
         }
@@ -57,7 +57,31 @@
                         '#ff5722',
                         '#b71c1c'
                     ],
-                    borderWidth: 1
+                    borderWidth: 1,
+                    borderRadius: 10, // Rounded corners
+                    barThickness: 'flex', // Flex bar thickness
+                    hoverBackgroundColor: [
+                        '#28a745',
+                        '#5cb85c',
+                        '#8bc34a',
+                        '#cddc39',
+                        '#ffeb3b',
+                        '#ffc107',
+                        '#ff9800',
+                        '#ff5722',
+                        '#b71c1c'
+                    ],
+                    hoverBorderColor: [
+                        '#28a745',
+                        '#5cb85c',
+                        '#8bc34a',
+                        '#cddc39',
+                        '#ffeb3b',
+                        '#ffc107',
+                        '#ff9800',
+                        '#ff5722',
+                        '#b71c1c'
+                    ]
                 }]
             };
 
@@ -70,7 +94,13 @@
                             beginAtZero: true,
                             suggestedMax: 5, // Add buffer above the topmost bar
                             grid: {
-                                drawBorder: false
+                                drawBorder: false,
+                                color: function(context) {
+                                    if (context.tick.value % 1 === 0) {
+                                        return 'rgba(0, 0, 0, 0.1)'; // Only show grid lines on whole numbers
+                                    }
+                                    return 'rgba(0, 0, 0, 0)';
+                                }
                             }
                         },
                         x: {
@@ -84,10 +114,26 @@
                             display: true,
                             labels: {
                                 font: {
-                                    size: 16 // Increase font size of legend
+                                    size: 16, // Increase font size of legend
+                                    weight: 'bold' // Bold legend text
                                 }
                             }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.7)',
+                            titleFont: {
+                                size: 16,
+                                weight: 'bold'
+                            },
+                            bodyFont: {
+                                size: 14
+                            },
+                            bodySpacing: 6,
+                            cornerRadius: 4
                         }
+                    },
+                    layout: {
+                        padding: 20 // Padding for a cleaner look
                     }
                 }
             });
