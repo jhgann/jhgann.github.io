@@ -32,8 +32,8 @@
         }
         #legend-container {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center; /* Center align legend items */
+            flex-wrap: wrap;
         }
         .legend-item {
             display: flex;
@@ -187,4 +187,9 @@
 
                 legendItem.appendChild(legendColor);
                 legendItem.appendChild(legendLabel);
-                legendContainer.appendChild(
+                legendContainer.appendChild(legendItem);
+            });
+        });
+    </script>
+</body>
+</html>
