@@ -27,8 +27,14 @@
       "Install Heat Pump"
     ];
 
-    const energyReduction = [-22, -20, -30, -10, -25, -15]; // kWh/m2a reduction for each measure
-    const co2Reduction = [-8, -5, -8, -3, -7, -4]; // kg CO2e/a reduction for each measure
+    // Extract URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const energyReductionParam = urlParams.get('energyReduction');
+    const co2ReductionParam = urlParams.get('co2Reduction');
+
+    // Convert the comma-separated values to arrays
+    const energyReduction = energyReductionParam ? energyReductionParam.split(',').map(Number) : [22, 20, 30, 10, 25, 15];
+    const co2Reduction = co2ReductionParam ? co2ReductionParam.split(',').map(Number) : [8, 5, 8, 3, 7, 4];
 
     // Starting amounts for the current state
     const currentEnergy = 200; // kWh/m2a
@@ -39,8 +45,8 @@
     const co2Totals = [currentCO2];
 
     for (let i = 0; i < energyReduction.length; i++) {
-    energyTotals.push(energyTotals[i] + energyReduction[i]);
-    co2Totals.push(co2Totals[i] + co2Reduction[i]);
+    energyTotals.push(energyTotals[i] - energyReduction[i]);
+    co2Totals.push(co2Totals[i] - co2Reduction[i]);
     }
 
     // Create a Chart.js chart
