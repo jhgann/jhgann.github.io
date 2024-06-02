@@ -39,7 +39,7 @@
 
         if (features.length > 0) {
           const building = features[0];
-          map.setPaintProperty('building', 'fill-extrusion-color', [
+          map.setPaintProperty('building-extrusion', 'fill-extrusion-color', [
             'case',
             ['==', ['get', 'id'], building.properties.id],
             '#ff0000',  // Highlight color
