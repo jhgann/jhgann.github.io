@@ -16,15 +16,36 @@
             width: 80%;
             margin: 0 auto;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
         canvas {
             background-color: #FFFFFF; /* Set chart background to white */
         }
         #chart-title {
-            font-size: 22px; /* Increased font size of the title */
+            font-size: 20px;
             font-weight: bold;
             text-align: center;
             margin-bottom: 10px;
+        }
+        #legend-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+        .legend-label {
+            font-size: 16px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -32,6 +53,7 @@
     <div id="chart-container">
         <div id="chart-title">Energy Efficiency Class</div>
         <canvas id="myChart" width="400" height="400"></canvas>
+        <div id="legend-container"></div>
     </div>
 
     <script>
@@ -124,13 +146,7 @@
                     },
                     plugins: {
                         legend: {
-                            display: true, // Show default legend
-                            position: 'bottom', // Move legend to the bottom
-                            labels: {
-                                font: {
-                                    size: 16, // Adjust font size of legend items
-                                }
-                            }
+                            display: false // Hide default legend
                         },
                         tooltip: {
                             backgroundColor: 'rgba(0,0,0,0.7)',
@@ -149,6 +165,25 @@
                         padding: 20 // Padding for a cleaner look
                     }
                 }
+            });
+
+            // Custom legend
+            var legendContainer = document.getElementById('legend-container');
+            chartData.labels.forEach(function(label, index) {
+                var legendItem = document.createElement('div');
+                legendItem.classList.add('legend-item');
+
+                var legendColor = document.createElement('div');
+                legendColor.classList.add('legend-color');
+                legendColor.style.backgroundColor = chartData.datasets[0].backgroundColor[index];
+
+                var legendLabel = document.createElement('div');
+                legendLabel.classList.add('legend-label');
+                legendLabel.textContent = label;
+
+                legendItem.appendChild(legendColor);
+                legendItem.appendChild(legendLabel);
+                legendContainer.appendChild(legendItem);
             });
         });
     </script>
