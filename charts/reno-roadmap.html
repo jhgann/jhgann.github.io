@@ -31,14 +31,16 @@
     const urlParams = new URLSearchParams(window.location.search);
     const energyReductionParam = urlParams.get('energyReduction');
     const co2ReductionParam = urlParams.get('co2Reduction');
+    const currentEnergyParam = urlParams.get('currentEnergy');
+    const currentCO2Param = urlParams.get('currentco2');
 
     // Convert the comma-separated values to arrays
     const energyReduction = energyReductionParam ? energyReductionParam.split(',').map(Number) : [22, 20, 30, 10, 25, 15];
     const co2Reduction = co2ReductionParam ? co2ReductionParam.split(',').map(Number) : [8, 5, 8, 3, 7, 4];
 
     // Starting amounts for the current state
-    const currentEnergy = 200; // kWh/m2a
-    const currentCO2 = 50; // kg CO2e/a
+    const currentEnergy = currentEnergyParam ? Number(currentEnergyParam) : 200; // kWh/m2a
+    const currentCO2 = currentCO2Param ? Number(currentCO2Param) : 50; // kg CO2e/a
 
     // Calculate running totals for energy and CO2 reductions
     const energyTotals = [currentEnergy];
