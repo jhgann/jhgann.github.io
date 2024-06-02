@@ -34,7 +34,7 @@
         // Find and highlight the building at the specified coordinates
         const features = map.queryRenderedFeatures(
           map.project([lng, lat]),
-          { layers: ['buildings'] }  // Specify the building layer from your style
+          { layers: ['Buildings'] }  // Specify the building layer from your style
         );
 
         if (features.length > 0) {
