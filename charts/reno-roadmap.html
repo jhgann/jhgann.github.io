@@ -35,8 +35,8 @@
     const currentCO2 = 50; // kg CO2e/a
 
     // Calculate running totals for energy and CO2 reductions
-    const energyTotals = [0, ...energyReduction.map((value, index) => currentEnergy + value)];
-    const co2Totals = [0, ...co2Reduction.map((value, index) => currentCO2 + value)];
+    const energyTotals = [currentEnergy, ...energyReduction.map((value, index) => currentEnergy + value)];
+    const co2Totals = [currentCO2, ...co2Reduction.map((value, index) => currentCO2 + value)];
 
     // Create a Chart.js chart
     const ctx = document.getElementById('retrofitChart').getContext('2d');
