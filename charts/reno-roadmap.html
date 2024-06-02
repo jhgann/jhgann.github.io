@@ -35,15 +35,13 @@
     const currentCO2 = 50; // kg CO2e/a
 
     // Calculate running totals for energy and CO2 reductions
-    const energyTotals = [currentEnergy, ...energyReduction.reduce((acc, val) => {
-        acc.push(acc[acc.length - 1] - val);
-        return acc;
-    }, [currentEnergy])];
+    const energyTotals = [currentEnergy];
+    const co2Totals = [currentCO2];
 
-    const co2Totals = [currentCO2, ...co2Reduction.reduce((acc, val) => {
-        acc.push(acc[acc.length - 1] - val);
-        return acc;
-    }, [currentCO2])];
+    for (let i = 0; i < energyReduction.length; i++) {
+    energyTotals.push(energyTotals[i] + energyReduction[i]);
+    co2Totals.push(co2Totals[i] + co2Reduction[i]);
+    }
 
     // Create a Chart.js chart
     const ctx = document.getElementById('retrofitChart').getContext('2d');
@@ -57,42 +55,41 @@
           borderColor: 'rgb(54, 162, 235)',
           backgroundColor: 'rgba(54, 162, 235, 0.2)',
           yAxisID: 'energy',
+          cubicInterpolationMode: 'monotone',
         }, {
           label: 'kg CO2e/a',
           data: co2Totals,
           borderColor: 'rgb(255, 99, 132)',
           backgroundColor: 'rgba(255, 99, 132, 0.2)',
           yAxisID: 'co2',
+          cubicInterpolationMode: 'monotone',
         }]
       },
       options: {
         scales: {
-          yAxes: [{
-            id: 'energy',
+            energy: {
             type: 'linear',
             position: 'left',
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'kWh/m2a'
+              text: 'kWh/m2a'
             },
-            ticks: {
-              beginAtZero: true // Start the scale from zero
-            }
-          }, {
-            id: 'co2',
+            grace: '5%',
+            beginAtZero: true // Start the scale from zero
+          }, 
+          co2: {
             type: 'linear',
             position: 'right',
-            scaleLabel: {
+            title: {
               display: true,
-              labelString: 'kg CO2e/a'
+              text: 'kg CO2e/a'
             },
             gridLines: {
               display: false
             },
-            ticks: {
-              beginAtZero: true // Start the scale from zero
-            }
-          }],
+            grace: '5%',
+            beginAtZero: true // Start the scale from zero
+          },
           xAxes: [{
             scaleLabel: {
               display: true,
@@ -101,7 +98,11 @@
           }]
         },
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        interaction: {
+            mode: 'index',
+            intersect: false,
+        },
       }
     });
   </script>
