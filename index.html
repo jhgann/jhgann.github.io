@@ -39,12 +39,17 @@
 
         if (features.length > 0) {
           const building = features[0];
-          map.setPaintProperty('building-extrusion', 'fill-extrusion-color', [
-            'case',
-            ['==', ['get', 'id'], building.properties.id],
-            '#ff0000',  // Highlight color
-            '#5b6262'  // Default color
-          ]);
+          const buildingId = building.properties.id; // Check if 'id' property exists
+          if (buildingId !== undefined) {
+            map.setPaintProperty('building-extrusion', 'fill-extrusion-color', [
+              'case',
+              ['==', ['get', 'id'], buildingId], // Use 'buildingId' instead of 'building.properties.id'
+              '#FFD700',  // Bright yellow highlight color
+              '#aaa'  // Default color
+            ]);
+          } else {
+            console.log('Building id is undefined.');
+          }
         } else {
           console.log('No building found at the specified coordinates.');
         }
