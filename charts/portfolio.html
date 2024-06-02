@@ -22,7 +22,7 @@
         }
         #chart-title {
             position: absolute;
-            top: -30px;
+            top: -40px;
             left: 0;
             font-size: 20px;
             font-weight: bold;
@@ -42,32 +42,61 @@
             var chartData = {
                 labels: ['A+', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
                 datasets: [{
-                    label: 'A+', data: [0], backgroundColor: '#28a745', borderColor: '#28a745', borderWidth: 1, borderRadius: 10,
-                },{
-                    label: 'A', data: [0], backgroundColor: '#5cb85c', borderColor: '#5cb85c', borderWidth: 1, borderRadius: 10,
-                },{
-                    label: 'B', data: [0], backgroundColor: '#8bc34a', borderColor: '#8bc34a', borderWidth: 1, borderRadius: 10,
-                },{
-                    label: 'C', data: [0], backgroundColor: '#cddc39', borderColor: '#cddc39', borderWidth: 1, borderRadius: 10,
-                },{
-                    label: 'D', data: [0], backgroundColor: '#ffeb3b', borderColor: '#ffeb3b', borderWidth: 1, borderRadius: 10,
-                },{
-                    label: 'E', data: [0], backgroundColor: '#ffc107', borderColor: '#ffc107', borderWidth: 1, borderRadius: 10,
-                },{
-                    label: 'F', data: [1], backgroundColor: '#ff9800', borderColor: '#ff9800', borderWidth: 1, borderRadius: 10,
-                },{
-                    label: 'G', data: [3], backgroundColor: '#ff5722', borderColor: '#ff5722', borderWidth: 1, borderRadius: 10,
-                },{
-                    label: 'H', data: [0], backgroundColor: '#b71c1c', borderColor: '#b71c1c', borderWidth: 1, borderRadius: 10,
+                    label: 'Energy Efficiency Class',
+                    data: [0, 0, 0, 0, 0, 0, 1, 3, 0],
+                    backgroundColor: [
+                        '#28a745', // A+ (green)
+                        '#5cb85c', // A
+                        '#8bc34a', // B
+                        '#cddc39', // C
+                        '#ffeb3b', // D
+                        '#ffc107', // E
+                        '#ff9800', // F (orange)
+                        '#ff5722', // G (red)
+                        '#b71c1c'  // H (dark red)
+                    ],
+                    borderColor: [
+                        '#28a745',
+                        '#5cb85c',
+                        '#8bc34a',
+                        '#cddc39',
+                        '#ffeb3b',
+                        '#ffc107',
+                        '#ff9800',
+                        '#ff5722',
+                        '#b71c1c'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 10, // Rounded corners
+                    barThickness: 'flex', // Flex bar thickness
+                    hoverBackgroundColor: [
+                        '#28a745',
+                        '#5cb85c',
+                        '#8bc34a',
+                        '#cddc39',
+                        '#ffeb3b',
+                        '#ffc107',
+                        '#ff9800',
+                        '#ff5722',
+                        '#b71c1c'
+                    ],
+                    hoverBorderColor: [
+                        '#28a745',
+                        '#5cb85c',
+                        '#8bc34a',
+                        '#cddc39',
+                        '#ffeb3b',
+                        '#ffc107',
+                        '#ff9800',
+                        '#ff5722',
+                        '#b71c1c'
+                    ]
                 }]
             };
 
             var myChart = new Chart(ctx, {
                 type: 'bar',
-                data: {
-                    labels: chartData.labels,
-                    datasets: chartData.datasets
-                },
+                data: chartData,
                 options: {
                     scales: {
                         y: {
@@ -102,20 +131,20 @@
                                 generateLabels: function(chart) {
                                     var data = chart.data;
                                     if (data.datasets.length) {
-                                        return data.datasets.map(function(dataset, i) {
+                                        return data.labels.map(function(label, i) {
                                             return {
-                                                text: dataset.label,
-                                                fillStyle: dataset.backgroundColor,
-                                                hidden: !chart.isDatasetVisible(i),
-                                                lineCap: dataset.borderCapStyle,
-                                                lineDash: dataset.borderDash,
-                                                lineDashOffset: dataset.borderDashOffset,
-                                                lineJoin: dataset.borderJoinStyle,
-                                                lineWidth: dataset.borderWidth,
-                                                strokeStyle: dataset.borderColor,
-                                                pointStyle: dataset.pointStyle,
+                                                text: label,
+                                                fillStyle: data.datasets[0].backgroundColor[i],
+                                                hidden: false,
+                                                lineCap: 'butt',
+                                                lineDash: [],
+                                                lineDashOffset: 0,
+                                                lineJoin: 'miter',
+                                                lineWidth: 0,
+                                                strokeStyle: data.datasets[0].backgroundColor[i],
+                                                pointStyle: 'circle',
                                                 rotation: 0,
-                                                datasetIndex: i
+                                                datasetIndex: 0
                                             };
                                         });
                                     }
