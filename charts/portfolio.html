@@ -93,6 +93,11 @@
                         y: {
                             beginAtZero: true,
                             suggestedMax: 5, // Add buffer above the topmost bar
+                            ticks: {
+                                callback: function(value) {
+                                    return Number.isInteger(value) ? value : ''; // Only show whole numbers
+                                }
+                            },
                             grid: {
                                 drawBorder: false,
                                 color: function(context) {
