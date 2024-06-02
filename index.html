@@ -45,6 +45,13 @@
             '#FFD70E',  // highlight color
             '#808080'  // Default color
           ]);
+      
+          // Rotate the map around the building
+          let bearing = -30; // Initial bearing
+          setInterval(() => {
+            bearing = (bearing + 0.5) % 360; // Increment bearing by 0.5 degrees
+            map.easeTo({ bearing, duration: 1000 }); // Smoothly transition to the new bearing
+          }, 50); // Rotate every 50 milliseconds
         } else {
           console.log('No building found at the specified coordinates.');
         }
