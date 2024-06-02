@@ -31,32 +31,36 @@
       map.on('load', () => {
         console.log('Map loaded successfully.');
 
-        // Find the closest feature (building) at the specified coordinates
-        const features = map.queryRenderedFeatures(
-          map.project([lng, lat]),
-          { layers: ['building-extrusion'] }  // Specify the correct building layer from your style
-        );
+        // Wait until the map is fully loaded before querying rendered features
+        setTimeout(() => {
 
-        if (features.length > 0) {
-          const closestFeature = features[0];
-          map.setPaintProperty('building-extrusion', 'fill-extrusion-color', [
-            'case',
-            ['==', ['id'], closestFeature.id], // Highlight the closest feature
-            '#FFD70E',  // highlight color
-            '#808080'  // Default color
-          ]);
-
-          // Smooth zoom to the building
-          map.easeTo({
-            center: [lng, lat],
-            zoom: 19,  // Close-up zoom level
-            bearing: -30, // Adjust the bearing
-            duration: 3000  // Zoom animation duration in milliseconds
-          });
-      
-        } else {
-          console.log('No building found at the specified coordinates.');
-        }
+          // Find the closest feature (building) at the specified coordinates
+          const features = map.queryRenderedFeatures(
+            map.project([lng, lat]),
+            { layers: ['building-extrusion'] }  // Specify the correct building layer from your style
+          );
+  
+          if (features.length > 0) {
+            const closestFeature = features[0];
+            map.setPaintProperty('building-extrusion', 'fill-extrusion-color', [
+              'case',
+              ['==', ['id'], closestFeature.id], // Highlight the closest feature
+              '#FFD70E',  // highlight color
+              '#808080'  // Default color
+            ]);
+  
+            // Smooth zoom to the building
+            map.easeTo({
+              center: [lng, lat],
+              zoom: 19,  // Close-up zoom level
+              bearing: -30, // Adjust the bearing
+              duration: 3000  // Zoom animation duration in milliseconds
+            });
+        
+          } else {
+            console.log('No building found at the specified coordinates.');
+          }
+        }, 2000); // Wait for 2 seconds after map load to ensure buildings are rendered
       });
 
       map.on('error', (e) => {
