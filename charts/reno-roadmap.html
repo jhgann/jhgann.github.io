@@ -36,12 +36,14 @@
 
     // Calculate running totals for energy and CO2 reductions
     const energyTotals = [currentEnergy, ...energyReduction.reduce((acc, val) => {
-      acc.push(acc[acc.length - 1] + val);
+      const total = acc[acc.length - 1] + val;
+      acc.push(total < 0 ? 0 : total); // Ensure total is not negative
       return acc;
     }, [currentEnergy])];
 
     const co2Totals = [currentCO2, ...co2Reduction.reduce((acc, val) => {
-      acc.push(acc[acc.length - 1] + val);
+      const total = acc[acc.length - 1] + val;
+      acc.push(total < 0 ? 0 : total); // Ensure total is not negative
       return acc;
     }, [currentCO2])];
 
