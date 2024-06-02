@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Retrofit Measures Impact Chart</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    canvas {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="retrofitChart"></canvas>
+
+  <script>
+    // Custom data for the chart
+    const retrofitMeasures = [
+      "Change Windows",
+      "Insulate Roof",
+      "Insulate Basement",
+      "Install Solar PV",
+      "Insulate Facade",
+      "Install Heat Pump"
+    ];
+
+    const energyReduction = [0, -20, -30, -10, -25, -15]; // kWh/m2a reduction for each measure
+    const co2Reduction = [0, -5, -8, -3, -7, -4]; // kg CO2e/a reduction for each measure
+
+    // Starting amounts for the current state
+    const currentEnergy = 200; // kWh/m2a
+    const currentCO2 = 50; // kg CO2e/a
+
+    // Calculate running totals for energy and CO2 reductions
+    const energyTotals = [currentEnergy, ...energyReduction.map((value, index) => currentEnergy + value)];
+    const co2Totals = [currentCO2, ...co2Reduction.map((value, index) => currentCO2 + value)];
+
+    // Create a Chart.js chart
+    const ctx = document.getElementById('retrofitChart').getContext('2d');
+    const retrofitChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: retrofitMeasures,
+        datasets: [{
+          label: 'kWh/m2a',
+          data: energyTotals,
+          borderColor: 'rgb(54, 162, 235)',
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          yAxisID: 'energy',
+        }, {
+          label: 'kg CO2e/a',
+          data: co2Totals,
+          borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          yAxisID: 'co2',
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            id: 'energy',
+            type: 'linear',
+            position: 'left',
+            scaleLabel: {
+              display: true,
+              labelString: 'kWh/m2a'
+            }
+          }, {
+            id: 'co2',
+            type: 'linear',
+            position: 'right',
+            scaleLabel: {
+              display: true,
+              labelString: 'kg CO2e/a'
+            },
+            gridLines: {
+              display: false
+            }
+          }],
+          xAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Renovation Measures'
+            }
+          }]
+        },
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
+  </script>
+</body>
+</html>
