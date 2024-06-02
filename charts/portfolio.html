@@ -8,12 +8,16 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #FFFFFF;
+            background-color: #ECF4F4;
             color: #2D3535;
+            font-size: 16px; /* Increased font size */
         }
         #chart-container {
             width: 80%;
             margin: 0 auto;
+        }
+        canvas {
+            background-color: #FFFFFF; /* Set chart background to white */
         }
     </style>
 </head>
@@ -29,7 +33,7 @@
             var chartData = {
                 labels: ['A+', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
                 datasets: [{
-                    label: 'Sample Data',
+                    label: 'Energy Efficiency Class',
                     data: [0, 0, 0, 0, 0, 0, 1, 3, 0],
                     backgroundColor: [
                         '#28a745', // A+ (green)
@@ -63,7 +67,26 @@
                 options: {
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            suggestedMax: 5, // Add buffer above the topmost bar
+                            grid: {
+                                drawBorder: false
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false // Remove vertical grid lines
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                font: {
+                                    size: 16 // Increase font size of legend
+                                }
+                            }
                         }
                     }
                 }
