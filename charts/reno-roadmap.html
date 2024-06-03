@@ -47,7 +47,7 @@
     const co2Totals = [currentCO2];
 
     // CO2 target for 2030
-    const targetCO2 = 35; // replace with your target CO2 value
+    const targetCO2 = 25; // replace with your target CO2 value
 
 
     for (let i = 0; i < energyReduction.length; i++) {
@@ -108,9 +108,10 @@
         data: Array(retrofitMeasures.length).fill(targetCO2),
         borderColor: '#FF696E', // color of the target line
         backgroundColor: '#FF696E', // color of the target line
-        borderWidth: 2,
+        borderWidth: 3,
         borderDash: [5, 5], // this will create a dashed line with a pattern of 5px dash, 5px gap
         fill: false,
+        yAxisID: 'co2', // use the 'co2' scale for the target line
         pointRadius: 0 // hide points
         },
         {
