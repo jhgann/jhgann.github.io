@@ -40,7 +40,6 @@
 </head>
 <body>
     <div id="chart-container">
-        <div id="chart-title">Energy Efficiency Class</div>
         <canvas id="myChart"></canvas>
         <div id="legend-container"></div>
     </div>
@@ -167,7 +166,8 @@
                     layout: {
                         padding: 10 // Padding for a cleaner look
                     },
-                    // aspectRatio: 1,
+                    maintainAspectRatio: true,
+                    aspectRatio: 5,
                 }
             });
 
